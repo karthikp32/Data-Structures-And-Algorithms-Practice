@@ -37,6 +37,25 @@ class LeetcodeProblems:
         result.append(newInterval)
         return result           
 
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        #Approach 1: Two Pointers
+        #if length > 1
+        #Start with i=0,j=1
+        #while i < len(s)
+            #add char at s[i] to a set
+        #   while j < len(s) and s[j] not in set
+        #       add char at s[j] to set
+        #       j++
+        #   set result = max(result, set.size())
+        #   if j ==  len(s)
+        #       return result
+        # clear the set
+        #   i++
+        #   j=i+1
+        #time:O(n^2)
+        #space:O(n)
+
+
 
 
 if __name__== '__main__':
