@@ -1,5 +1,14 @@
+from typing import List
+from typing import Optional
+
 class LeetcodeProblems:
     
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val
+            self.left = left
+            self.right = right
+
     def insertNewInterval(self, intervals, newInterval):
         #Approach 1:
         # prevInterval = intervals[0]
@@ -81,10 +90,67 @@ class LeetcodeProblems:
 
 
 
+    def add_node_val_to_level_map(map, nextLevel, curr):
+        if nextLevel in map:
+            map[nextLevel].append(curr.val)
+        else:
+            map[nextLevel] = [curr.val]   
+        return map         
+
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        
+        #Approach 1:
+        #Breadth first search
+        #if root:
+        #   level = 1
+        #   queue.append((level, root))
+        #   map[level] = [root.val]
+        #while queue:
+        #   currLevel, currNode = queue.pop(0)
+        #   nextLevel = currLevel + 1
+        #   if curr.left:
+        #       queue.append(nextLevel, curr.left)
+        #       if nextLevel in map:
+        #           map[nextLevel].append(curr.left.val)
+        #       else:
+        #           map[nextLevel] = [curr.left.val]
+        #   if curr.right:
+        #       queue.append(nextLevel, curr.right)
+        #       if nextLevel in map:
+        #           map[nextLevel].append(curr.right.val)
+        #       else:
+        #           map[nextLevel] = [curr.right.val]
+        #return list(map.values())
+        #time: O(n)
+        #space: O(n)
+
+        #ex. 4
+        #Input: root = [3,9,20,1,4,15,7]
+        # Output: [[3],[9,20],[1,4,15,7]]
+        if root:
+            level = 1
+            queue = [(level, root)]
+            map = {}
+            map[level] = [root.val]
+            while queue:
+                (currLevel, curr) = queue.pop(0)
+                nextLevel = currLevel + 1
+                if curr.left:
+                    queue.append((nextLevel, curr.left))
+                    map = self.add_node_val_to_level_map(map, nextLevel, curr.left)
+                if curr.right:
+                    queue.append((nextLevel, curr.right))
+                    map = self.add_node_val_to_level_map(map, nextLevel, curr.right)
+        else:
+            return []            
+
+        return list(map.values())   
+
 
 if __name__== '__main__':
 
     leetcodeProblems = LeetcodeProblems()
+
 
     s1 = "abcabcbb"
     output1 = 3
