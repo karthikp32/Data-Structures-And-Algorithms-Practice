@@ -38,6 +38,11 @@ class LeetcodeProblems:
         return result           
 
     def lengthOfLongestSubstring(self, s: str) -> int:
+
+        #ex. 4
+        #Input: s = "abcdeab"
+        # Output: 5
+
         #Approach 1: Two Pointers
         #if length > 1
         #Start with i=0,j=1
@@ -52,8 +57,27 @@ class LeetcodeProblems:
         # clear the set
         #   i++
         #   j=i+1
-        #time:O(n^2)
+        #time:O(n)
         #space:O(n)
+        result = 0
+        if (len(s)) <= 1:
+            return len(s)
+        else:
+            i,j=0,1
+            while i < len(s):
+                curr = set()
+                curr.add(s[i])
+                while j < len(s) and s[j] not in curr:
+                    curr.add(s[j])
+                    j+=1
+                result = max(result, len(curr))
+                if j ==  len(s):
+                    return result
+                curr.clear()
+                i+=1
+                j=i+1
+                
+        return result               
 
 
 
@@ -61,6 +85,25 @@ class LeetcodeProblems:
 if __name__== '__main__':
 
     leetcodeProblems = LeetcodeProblems()
+
+    s1 = "abcabcbb"
+    output1 = 3
+    assert output1 == leetcodeProblems.lengthOfLongestSubstring(s1), "failed test case 1"
+
+    s2 = "bbbbb"
+    output1 = 1
+    assert output1 == leetcodeProblems.lengthOfLongestSubstring(s2), "failed test case 2"
+
+    
+    s3 = "pwwkew"
+    output1 = 3
+    assert output1 == leetcodeProblems.lengthOfLongestSubstring(s3), "failed test case 3"
+    
+    
+    s4 = "abcdeab"
+    output1 = 5
+    assert output1 == leetcodeProblems.lengthOfLongestSubstring(s4), "failed test case 4"
+
 
     intervals4 = [[1,5],[12,16]]
     newInterval4 = [6,10]
