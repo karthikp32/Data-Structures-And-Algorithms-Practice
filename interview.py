@@ -81,8 +81,9 @@ class Interview:
 # Parallel preferred
 
 # 6. create a function to (parallel) compute the intersection of two sets
-    # {0:1, 1:2, 2:4, 3:7, 4:8}
-    # {0:1 }
+    # setA = {0,1,2,3,4}
+    # setB = {0,1,3}
+    # intersection = {0,1,3}
 # An idea could be to use a divide and conquer algorithm or something like what merge sort does where it keeps splitting the data into halves
     #how can I iterate through both in parallel? timing might off with multithreading
     #i wonder if you could come up with O(logN) algorithm where you keep halving the process
@@ -189,12 +190,24 @@ if __name__== '__main__':
     actualInter1 = interview.intersection(set1A, set1B)
     assert expectedInter1 == actualInter1, "failed test case 1 of Intersection  Algorithms"
 
-    # set2A = {1,2,3,4}
-    # set2B = {1,2}  
-    # expectedInter1 = {1,2}
-    # actualInter1 = interview.intersection(set1A, set1B)
-    # assert expectedInter1 == actualInter1, "failed test case 1 of Intersection  Algorithms"
+    set2A = {1,2} 
+    set2B = {1,2,3,4} 
+    expectedInter1 = {1,2}
+    actualInter1 = interview.intersection(set2A, set2B)
+    assert expectedInter1 == actualInter1, "failed test case 2 of Intersection  Algorithms"
 
+    set2A = {} 
+    set2B = {1,2,3,4} 
+    expectedInter1 = set()
+    actualInter1 = interview.intersection(set2A, set2B)
+    assert expectedInter1 == actualInter1, "failed test case 3 of Intersection  Algorithms"
+
+
+    set2A = {} 
+    set2B = {} 
+    expectedInter1 = set()
+    actualInter1 = interview.intersection(set2A, set2B)
+    assert expectedInter1 == actualInter1, "failed test case 4 of Intersection  Algorithms"
 
     #Sum examples
 #Ex. 1 
