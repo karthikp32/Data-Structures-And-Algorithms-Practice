@@ -12,6 +12,13 @@ def binsearch(nums, n):
             lo = mid + 1
     return None
 
+def linear_search(nums, n):
+    for idx, val in enumerate(nums):
+        if val == n:
+            return idx
+    return None
+
+
 
 if __name__ == '__main__':
     a = (0, 1, 3, 4)
@@ -32,4 +39,7 @@ if __name__ == '__main__':
     )
     for nums, n, exp in cases:
         assert binsearch(nums, n) == exp
+    print('ok')
+    for nums, n, exp in cases:
+        assert linear_search(nums, n) == exp
     print('ok')
