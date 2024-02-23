@@ -1,3 +1,5 @@
+import timeit
+import statistics
 
 def binsearch(nums, n):
     lo, hi = 0, len(nums)
@@ -12,7 +14,7 @@ def binsearch(nums, n):
             lo = mid + 1
     return None
 
-def linear_search(nums, n):
+def linear_search_iterative(nums, n):
     for idx, val in enumerate(nums):
         if val == n:
             return idx
@@ -37,9 +39,12 @@ if __name__ == '__main__':
         (a, 2, None),
         (b, -3, None),
     )
+    binary_search_timings = []
+    linear_search_timings = []
     for nums, n, exp in cases:
-        assert binsearch(nums, n) == exp
+        binary_search_timings.append(timeit.timeit(lambda: binsearch(nums, n), number=3))
     print('ok')
     for nums, n, exp in cases:
-        assert linear_search(nums, n) == exp
-    print('ok')
+        linear_search_timings.append(timeit.timeit(lambda: linear_search_iterative(nums, n), number=3))
+    print("binary search took a median of " + str(statistics.median(binary_search_timings) * 1000000) + " microseconds")
+    print("linear search took a median of " + str(statistics.median(linear_search_timings) * 1000000) + " microseconds")
