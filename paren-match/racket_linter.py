@@ -5,7 +5,10 @@ class RacketLinter:
     #detects the location of the missing closing character 
     #and returns the line and character number of the opening character
     #Constraints:  parenthesis only includes {'(', ')', '[', ']'}
-    characters_and_their_line_and_character_number = []
+    parenthesis_pairs = {']': '[', ')': '('} 
+    open_parenthesis = ('[', '(')   
+    closing_parenthesis = (']', ')')   
+
 
     # TODO: figure out how to read through each line of racket code,
     #character by character and store the line number and character number in the line
@@ -40,17 +43,18 @@ class RacketLinter:
 
     def find_open_parenthesis_to_match_missing_closing_parenthesis(self, file_name):
         stack = []
+        
         line_num = 1
         char_num = 0
         with open(file_name) as fileobj:
             for line in fileobj:
                 for ch in line: 
-                    if ch == '[' or ch == '(':
+                    if ch in self.open_parenthesis:
                         stack.append([ch, line_num, char_num])
-                    elif ch == ']' or ch == ')':
+                    elif ch in self.closing_parenthesis:
                         open_paren_line_num_char_num = stack.pop()
                         open_paren = open_paren_line_num_char_num[0]
-                        if ch == ']' and open_paren != '[' or ch == ')' and open_paren != '(':
+                        if open_paren != self.parenthesis_pairs[ch]:
                             line_num = open_paren_line_num_char_num[1]
                             char_num = open_paren_line_num_char_num[2]
                             return line_num, char_num      
