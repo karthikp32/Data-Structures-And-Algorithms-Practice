@@ -39,12 +39,17 @@ class UndoBuffer:
 
     def print_all_vals(self):
         curr = self.head_node
+        print(curr.val)
         while curr.next_node != None:
-            print(curr.val)
             curr = curr.next_node
+            print(curr.val)
 
-    def add_to_back(val):
-        pass
+
+    def add_to_back(self, val):
+        temp = self.DoublyLinkedListNode(val, None, None)
+        self.last_node.next_node = temp
+        temp.prev_node = self.last_node
+        self.last_node = temp
 
 
 if __name__== '__main__':
@@ -77,16 +82,24 @@ if __name__== '__main__':
     #remove_oldest_text_from_buffer()
     #Output: 'Hi'
 
+    undo_buffer.add_last_typed_text('Hi')
     undo_buffer.add_last_typed_text('Karthik')
     undo_buffer.add_last_typed_text('!')
+    undo_buffer.print_all_vals()
     expected = 'Hi'
     actual = undo_buffer.get_oldest_text_from_buffer()
-    print(actual)
-    undo_buffer.print_all_vals()
     assert expected == actual, "failed test case 3 of undo buffer"
 
     #4) Input: buffer holding 1,2 --> [1,2]
     #add_to_back(3) --> [2, 1, 3]
     #remove_oldest_text_from_buffer()
     #Output: 3
+    undo_buffer2 = UndoBuffer(None, None)
+    undo_buffer2.add_last_typed_text(1)
+    undo_buffer2.add_last_typed_text(2)
+    undo_buffer2.add_to_back(3)
+    undo_buffer2.print_all_vals()
+    expected = 3
+    actual = undo_buffer2.get_oldest_text_from_buffer()
+    assert expected == actual, "failed test case 4 of undo buffer"
 
