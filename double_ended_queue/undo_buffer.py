@@ -103,3 +103,7 @@ if __name__== '__main__':
     actual = undo_buffer2.get_oldest_text_from_buffer()
     assert expected == actual, "failed test case 4 of undo buffer"
 
+    print('Swathi')
+    print('Abhi')
+    print('Akhil')
+    print('Vamsi')
