@@ -18,6 +18,41 @@ class ProcessTree:
     #ps -o pid,ppid,cmd | python3 process_tree.py
     #can alias python3 process_tree.py as ptree
     #so I can execute ps -o pid,ppid,cmd | ptree
+
+    #Approach 1:
+    #Read in each line of ps -o pid,ppid,cmd output and Build Process Tree
+    #parse out process id, parent process id, and command
+    #and store in one ProcessTreeNode
+    #set root node equal to first node
+    #use dictionary to store pid:cmd
+    #use dictionary to store alreadyCreatedNodes pid:ProcessTreeNode(pid)
+    #ProcessTreeNode(val)
+    #   self.node = ''
+    #   self.children = []
+    #set processTreeNode.node = ppid
+    #if pid in alreadyCreatedNodes
+    #processTreeNode.children.append(alreadyCreatedNodes[pid])
+    #else
+    #processTreeNode.children.append(ProcessTreeNode(pid))
+
+    #if current node's PID equals PPID of root node
+    #set rootNode equal to that node
+    #parent pointer or child pointer or both?
+
+    #traverse from root node to child nodes, grandchildren nodes, etc.
+    #in breadth first search fashion
+    #construct pstree visual as traverse each node
+    #if you are accessing root node
+    #add root node's command to visual
+    #if you are accessing first child node
+    #add "-" + first child node's command to visual
+    #if you are accessing second+ child node
+    #add "|\n-" +  second+ child node's command to visual
+    #time: O(n)
+    #space: O(n)
+    
+
+
     pass
 if __name__== '__main__': 
     pass
