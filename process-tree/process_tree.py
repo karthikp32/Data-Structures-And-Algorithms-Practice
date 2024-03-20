@@ -50,8 +50,26 @@ class ProcessTree:
     #add "|\n-" +  second+ child node's command to visual
     #time: O(n)
     #space: O(n)
-    
+    class ProcessTreeNode:
 
+         def __init__(self, val, children):
+            self.val = val
+            self.children = children
+
+    def read_line_of_ps_output(output):
+        pass
+
+    def parse_pid_ppid_cmd_from_line(line):
+        pass
+
+    def parse_out_process_tree_nodes(output):
+        pass
+
+    def traverse_and_build_process_tree_visual(root_node):
+        pass
+
+    def print_process_tree_visual(process_tree_visual):
+        pass
 
     pass
 if __name__== '__main__': 
