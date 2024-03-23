@@ -1,3 +1,5 @@
+import sys
+
 class ProcessTree:
     #Problem Defintion: Create Process Tree of Running Processes from ps linux command output 
     #Ex. 1
@@ -50,27 +52,48 @@ class ProcessTree:
     #add "|\n-" +  second+ child node's command to visual
     #time: O(n)
     #space: O(n)
+
+
     class ProcessTreeNode:
 
          def __init__(self, val, children):
             self.val = val
             self.children = children
 
-    def read_line_of_ps_output(output):
+
+    def parse_pid_ppid_cmd_from_line(self, line):
+        active_processes_info = line.split()
+        pid = active_processes_info[0]
+        ppid = active_processes_info[1]
+        cmd = active_processes_info[2]
+        return pid, ppid, cmd
+
+    def parse_out_process_tree_nodes(self, pid_cmd_pairs, already_created_nodes, root):
+        for line in sys.stdin:
+            pid, ppid, cmd = self.parse_pid_ppid_cmd_from_line(line)
+            pid_cmd_pairs[pid] = cmd
+            if pid not in already_created_nodes:
+                already_created_nodes[pid] = self.ProcessTreeNode(pid, [])
+            if ppid in already_created_nodes:
+                already_created_nodes[ppid].children.append(pid)
+                root = already_created_nodes[ppid]
+        print(root.val)        
+        return root        
+
+    def traverse_and_build_process_tree_visual(self, root_node):
         pass
 
-    def parse_pid_ppid_cmd_from_line(line):
-        pass
-
-    def parse_out_process_tree_nodes(output):
-        pass
-
-    def traverse_and_build_process_tree_visual(root_node):
-        pass
-
-    def print_process_tree_visual(process_tree_visual):
+    def print_process_tree_visual(self, process_tree_visual):
         pass
 
     pass
 if __name__== '__main__': 
-    pass
+
+    processTree = ProcessTree()
+    
+    pid_cmd_pairs = {}
+    already_created_nodes = {}
+    root = None
+    processTree.parse_out_process_tree_nodes(pid_cmd_pairs, already_created_nodes, root)
+        
+        
