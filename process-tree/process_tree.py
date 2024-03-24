@@ -56,8 +56,9 @@ class ProcessTree:
 
     class ProcessTreeNode:
 
-         def __init__(self, val, children):
-            self.val = val
+         def __init__(self, pid, cmd, children):
+            self.pid = pid
+            self.cmd = cmd
             self.children = children
 
 
@@ -68,32 +69,48 @@ class ProcessTree:
         cmd = active_processes_info[2]
         return pid, ppid, cmd
 
-    def parse_out_process_tree_nodes(self, pid_cmd_pairs, already_created_nodes, root):
+    def parse_out_process_tree_nodes(self, already_created_nodes, root):
         for line in sys.stdin:
             pid, ppid, cmd = self.parse_pid_ppid_cmd_from_line(line)
-            pid_cmd_pairs[pid] = cmd
             if pid not in already_created_nodes:
-                already_created_nodes[pid] = self.ProcessTreeNode(pid, [])
+                already_created_nodes[pid] = self.ProcessTreeNode(pid, cmd, [])
             if ppid in already_created_nodes:
-                already_created_nodes[ppid].children.append(pid)
-                root = already_created_nodes[ppid]
-        print(root.val)        
+                already_created_nodes[ppid].children.append(already_created_nodes[pid])
+                root = already_created_nodes[ppid]       
         return root        
-
-    def traverse_and_build_process_tree_visual(self, root_node):
-        pass
+    
+    #traverse from root node to child nodes, grandchildren nodes, etc.
+    #in breadth first search fashion
+    #construct pstree visual as traverse each node
+    #if you are accessing root node
+    #add root node's command to visual
+    #if you are accessing first child node
+    #add "-" + first child node's command to visual
+    #if you are accessing second+ child node
+    #add "|\n-" +  second+ child node's command to visual
+    def traverse_and_build_process_tree_visual(self, root):
+        bfsQ = []
+        bfsQ.append(root)
+        visual = root.cmd
+        nodesTraversed = 0
+        while bfsQ:
+            curr = bfsQ.pop(0)
+            print("curr node's pid is " + curr.pid + " and cmd is " + curr.cmd)
+            for child in curr.children:
+                bfsQ.append(child) 
+        return visual    
 
     def print_process_tree_visual(self, process_tree_visual):
-        pass
+        print(process_tree_visual)
 
     pass
 if __name__== '__main__': 
 
     processTree = ProcessTree()
     
-    pid_cmd_pairs = {}
+
     already_created_nodes = {}
     root = None
-    processTree.parse_out_process_tree_nodes(pid_cmd_pairs, already_created_nodes, root)
-        
-        
+    root = processTree.parse_out_process_tree_nodes(already_created_nodes, root)
+    visual = processTree.traverse_and_build_process_tree_visual(root)    
+    processTree.print_process_tree_visual(visual)    
