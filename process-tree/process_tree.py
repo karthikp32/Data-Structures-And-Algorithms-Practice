@@ -92,12 +92,19 @@ class ProcessTree:
         bfsQ = []
         bfsQ.append(root)
         visual = root.cmd
-        nodesTraversed = 0
+        childIndex = 0
         while bfsQ:
             curr = bfsQ.pop(0)
             print("curr node's pid is " + curr.pid + " and cmd is " + curr.cmd)
             for child in curr.children:
-                bfsQ.append(child) 
+                bfsQ.append(child)
+                if childIndex < 1:
+                    visual += '-' + child.cmd
+                else:
+                    visual +=  '\n'
+                    visual += ' ' * len(curr.cmd)
+                    visual += '|-' +  child.cmd 
+                childIndex += 1            
         return visual    
 
     def print_process_tree_visual(self, process_tree_visual):
