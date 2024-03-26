@@ -78,7 +78,7 @@ class ProcessTree:
             pid, ppid, cmd = self.parse_pid_ppid_cmd_from_line(line)
             ppids = [p_node.ppid for p_node in already_created_nodes.values()]
             if pid not in already_created_nodes:
-                already_created_nodes[pid] = self.ProcessTreeNode(pid, cmd, [])
+                already_created_nodes[pid] = self.ProcessTreeNode(pid, cmd, ppid, [])
             if ppid in already_created_nodes:
                 already_created_nodes[ppid].children.append(already_created_nodes[pid])
                 root = already_created_nodes[ppid] 
