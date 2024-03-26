@@ -1,4 +1,5 @@
 import sys
+
 import os 
 
 
@@ -67,14 +68,9 @@ class ProcessTree:
 
     def parse_pid_ppid_cmd_from_line(self, line):
         active_processes_info = line.split()
-        # print(active_processes_info)
         pid = active_processes_info[0]
         ppid = active_processes_info[1]
         cmd = active_processes_info[2]
-        # if len(active_processes_info) > 3:
-        #     cmd += ' ' + active_processes_info[3]
-        # if len(active_processes_info) > 4:
-        #     cmd += ' ' + active_processes_info[4]
         return pid, ppid, cmd
 
     def parse_out_process_tree_nodes(self, already_created_nodes, root):
@@ -82,8 +78,8 @@ class ProcessTree:
             pid, ppid, cmd = self.parse_pid_ppid_cmd_from_line(line)
             ppids = [p_node.ppid for p_node in already_created_nodes.values()]
             if pid not in already_created_nodes:
-                already_created_nodes[pid] = self.ProcessTreeNode(pid, cmd, ppid, [])
-            if ppid in already_created_nodes: #covers parent came before child
+                already_created_nodes[pid] = self.ProcessTreeNode(pid, cmd, [])
+            if ppid in already_created_nodes:
                 already_created_nodes[ppid].children.append(already_created_nodes[pid])
                 root = already_created_nodes[ppid] 
             #covers if child comes before parent
@@ -120,8 +116,8 @@ class ProcessTree:
                     visual += '-' + child.cmd + '(' + child.pid + ')'
                 else:
                     visual +=  '\n'
-                    visual += ' ' * (len(curr.cmd) + len(curr.pid) + 2)
-                    visual += '|-' +  child.cmd + '(' + child.pid + ')'
+                    visual += ' ' * len(curr.cmd)
+                    visual += '|-' +  child.cmd 
                 childIndex += 1            
         return visual    
     
