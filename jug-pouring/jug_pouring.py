@@ -24,8 +24,48 @@ class JugPouring:
 
     #We can build graph/path as we go instead of building entire graph first and then searching
     # TODO: try to figure approach where you build a graph/path as you go to solve this problem
-    
-
+    #Approach 1:
+    #JugState
+    #three_gallon=''
+    #five_gallon=''
+    #neighbors = []
+    #state_transitions = ['empty 3', 'empty 5', 'fill 3', 'fill 5', 'transfer from 3 to 5', 'transfer from 5 to 3']
+    #Start with start_state = JugState(0, 0, None)
+    #bfsQ = []
+    #bfsQ.append(start_state)
+    #depth = 0
+    #while bfsQ:
+    #   curr_state = bfsQ.pop()
+        #for transition in state_transitions:
+        #   next_state = JugState(0, 0, None)
+        #   if transition == 'empty 3':
+        #       next_state.three_gallon = 0
+        #   elif transition == 'empty 5':
+        #       next_state.five_gallon = 0
+        #   elif transition == 'fill 3':
+        #       next_state.three_gallon = 3
+        #   elif transition == 'fill 5':
+        #       next_state.five_gallon = 5
+        #   elif transition == 'transfer from 3 to 5':
+        #       if next_state.three_gallon < (5 - next_state.five_gallon):
+        #           next_state.five_gallon += next_state.three_gallon
+        #           next_state.three_gallon = 0
+        #       else:        
+        #           next_state.five_gallon = 5
+        #           next_state.three_gallon -= (5-jug_state.five_gallon)
+        #   elif transition == 'transfer from 5 to 3':
+        #       if next_state.five_gallon >= (3 - next_state.three_gallon):
+        #           next_state.five_gallon -= (3 - next_state.three_gallon)
+        #           next_state.three_gallon = 3
+        #       else:        
+        #           next_state.five_gallon = 0
+        #           next_state.three_gallon += next_state.five_gallon
+        #   if next_state.five_gallon == 4
+        #       return depth
+        #   bfsQ.append(next_state)
+        #depth += 1
+        #time: O(d) where d = depth to reach five_gallon == 4
+        #space: O()
      
     
 
