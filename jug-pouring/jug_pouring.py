@@ -80,7 +80,7 @@ class JugPouring:
         depth = 0
         visited = []
         while bfsQ:
-            curr_state = bfsQ.pop()
+            curr_state = bfsQ.pop(0)
             curr_state_tuple = (curr_state.three_gallon, curr_state.five_gallon)
             if curr_state_tuple not in visited:
                 visited.append(curr_state_tuple)
@@ -101,8 +101,8 @@ class JugPouring:
                             next_state.five_gallon += next_state.three_gallon
                             next_state.three_gallon = 0
                         else:        
-                            next_state.five_gallon = 5
-                            next_state.three_gallon -= (5-next_state.five_gallon)
+                            next_state.five_gallon = 4
+                            next_state.three_gallon -= (4-next_state.five_gallon)
                     elif transition == 'transfer from 5 to 3':
                         if next_state.five_gallon >= (3 - next_state.three_gallon):
                             next_state.five_gallon -= (3 - next_state.three_gallon)
