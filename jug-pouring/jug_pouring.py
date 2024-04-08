@@ -78,41 +78,45 @@ class JugPouring:
         bfsQ = []
         bfsQ.append(start_state)
         depth = 0
+        visited = []
         while bfsQ:
             curr_state = bfsQ.pop()
-            print("three gallon has " + str(curr_state.three_gallon) + " and five gallon has " + str(curr_state.five_gallon) + " at the current state")
-            for transition in state_transitions:
-                print('current transition is ' + transition)
-                next_state = self.JugState(curr_state.three_gallon, curr_state.five_gallon)
-                if transition == 'empty 3':
-                    next_state.three_gallon = 0
-                elif transition == 'empty 5':
-                    next_state.five_gallon = 0
-                elif transition == 'fill 3':
-                    next_state.three_gallon = 3
-                elif transition == 'fill 5':
-                    next_state.five_gallon = 5
-                elif transition == 'transfer from 3 to 5':
-                    if next_state.three_gallon <= (5 - next_state.five_gallon):
-                        next_state.five_gallon += next_state.three_gallon
+            curr_state_tuple = (curr_state.three_gallon, curr_state.five_gallon)
+            if curr_state_tuple not in visited:
+                visited.append(curr_state_tuple)
+                print("three gallon has " + str(curr_state.three_gallon) + " and five gallon has " + str(curr_state.five_gallon) + " at the current state")
+                for transition in state_transitions:
+                    print('current transition is ' + transition)
+                    next_state = self.JugState(curr_state.three_gallon, curr_state.five_gallon)
+                    if transition == 'empty 3':
                         next_state.three_gallon = 0
-                    else:        
-                        next_state.five_gallon = 5
-                        next_state.three_gallon -= (5-next_state.five_gallon)
-                elif transition == 'transfer from 5 to 3':
-                    if next_state.five_gallon >= (3 - next_state.three_gallon):
-                        next_state.five_gallon -= (3 - next_state.three_gallon)
-                        next_state.three_gallon = 3
-                    else:        
+                    elif transition == 'empty 5':
                         next_state.five_gallon = 0
-                        next_state.three_gallon += next_state.five_gallon
-                if next_state.five_gallon == 4:
-                    return depth
-                print("three gallon of next state is " + str(next_state.three_gallon) + " and five gallon is " + str(next_state.five_gallon))
-                if next_state.three_gallon != 0 or next_state.five_gallon != 0:
-                    bfsQ.append(next_state)
-            depth += 1
-            # print(bfsQ)
+                    elif transition == 'fill 3':
+                        next_state.three_gallon = 3
+                    elif transition == 'fill 5':
+                        next_state.five_gallon = 5
+                    elif transition == 'transfer from 3 to 5':
+                        if next_state.three_gallon <= (5 - next_state.five_gallon):
+                            next_state.five_gallon += next_state.three_gallon
+                            next_state.three_gallon = 0
+                        else:        
+                            next_state.five_gallon = 5
+                            next_state.three_gallon -= (5-next_state.five_gallon)
+                    elif transition == 'transfer from 5 to 3':
+                        if next_state.five_gallon >= (3 - next_state.three_gallon):
+                            next_state.five_gallon -= (3 - next_state.three_gallon)
+                            next_state.three_gallon = 3
+                        else:        
+                            next_state.five_gallon = 0
+                            next_state.three_gallon += next_state.five_gallon
+                    if next_state.five_gallon == 4:
+                        return depth
+                    print("three gallon of next state is " + str(next_state.three_gallon) + " and five gallon is " + str(next_state.five_gallon))
+                    if next_state.three_gallon != 0 or next_state.five_gallon != 0:
+                        bfsQ.append(next_state)
+                depth += 1
+                # print(bfsQ)
         return -1
     
 if __name__ == '__main__':
