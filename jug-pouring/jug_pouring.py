@@ -111,7 +111,7 @@ class JugPouring:
                             next_state.five_gallon = 0
                             next_state.three_gallon += next_state.five_gallon
                     if next_state.five_gallon == 4:
-                        return depth
+                        return (next_state.three_gallon, next_state.five_gallon), depth
                     print("three gallon of next state is " + str(next_state.three_gallon) + " and five gallon is " + str(next_state.five_gallon))
                     if next_state.three_gallon != 0 or next_state.five_gallon != 0:
                         bfsQ.append(next_state)
