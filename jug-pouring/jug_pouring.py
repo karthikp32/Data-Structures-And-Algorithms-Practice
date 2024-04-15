@@ -66,6 +66,7 @@ class JugPouring:
         #depth += 1
         #time: O(d) where d = depth to reach five_gallon == 4
         #space: O()
+
     class JugState:
 
         def __init__(self, three_gallon, five_gallon, path_to_node, depth):
@@ -83,20 +84,12 @@ class JugPouring:
             next_state.three_gallon = 3
         elif transition == 'fill 5':
             next_state.five_gallon = 5
-        elif transition == 'transfer from 3 to 5':
-            if next_state.three_gallon <= (5 - next_state.five_gallon):
-                next_state.five_gallon += next_state.three_gallon
-                next_state.three_gallon = 0
-            else:        
-                next_state.five_gallon = 4
-                next_state.three_gallon -= (4-next_state.five_gallon)
-        elif transition == 'transfer from 5 to 3':
-            if next_state.five_gallon >= (3 - next_state.three_gallon):
-                next_state.five_gallon -= (3 - next_state.three_gallon)
-                next_state.three_gallon = 3
-            else:        
-                next_state.five_gallon = 0
-                next_state.three_gallon += next_state.five_gallon
+        elif transition == 'transfer from 3 to 5': #transfer from 3 to 5: (a,b) -> (max(0, a-(5 - b)), min (a + b, 5))
+            next_state.three_gallon = max(0, next_state.three_gallon - (5 - next_state.five_gallon))
+            next_state.five_gallon = min(next_state.three_gallon + next_state.five_gallon, 5)
+        elif transition == 'transfer from 5 to 3': #transfer from 5 to 3: (a,b) -> (min(3, a+b ), max(b-(3-a), 0))
+            next_state.three_gallon = min(3, next_state.three_gallon + next_state.five_gallon)
+            next_state.five_gallon = max(next_state.five_gallon-(3-next_state.three_gallon), 0)
         return next_state
     
     def get_smallest_steps_to_solve_jug_pouring_problem(self):
