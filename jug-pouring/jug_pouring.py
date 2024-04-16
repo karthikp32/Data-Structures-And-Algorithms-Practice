@@ -85,11 +85,15 @@ class JugPouring:
         elif transition == 'fill 5':
             next_state.five_gallon = 5
         elif transition == 'transfer from 3 to 5': #transfer from 3 to 5: (a,b) -> (max(0, a-(5 - b)), min (a + b, 5))
-            next_state.three_gallon = max(0, next_state.three_gallon - (5 - next_state.five_gallon))
-            next_state.five_gallon = min(next_state.three_gallon + next_state.five_gallon, 5)
+            temp3 = next_state.three_gallon
+            temp5 = next_state.five_gallon
+            next_state.five_gallon = min(temp3 + temp5, 5)
+            next_state.three_gallon = max(0, temp3 - (5 - temp5))
         elif transition == 'transfer from 5 to 3': #transfer from 5 to 3: (a,b) -> (min(3, a+b ), max(b-(3-a), 0))
-            next_state.three_gallon = min(3, next_state.three_gallon + next_state.five_gallon)
-            next_state.five_gallon = max(next_state.five_gallon-(3-next_state.three_gallon), 0)
+            temp3 = next_state.three_gallon
+            temp5 = next_state.five_gallon
+            next_state.three_gallon = min(3, temp3 + temp5)
+            next_state.five_gallon = max(temp5-(3-temp3), 0)
         return next_state
     
     def get_smallest_steps_to_solve_jug_pouring_problem(self):
