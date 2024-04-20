@@ -46,17 +46,15 @@ class KnightsTour:
         visited.add(starting_position)
         while bfsQ:
             curr_position = bfsQ.pop(0)
-            print(curr_position)
             visited.add(curr_position)
             chessboard[curr_position[0]][curr_position[1]] = 1
-            if len(visited) == 25:
+            if len(visited) == rows_in_board * cols_in_board:
                 return chessboard
             for transition in state_transitions:
                 new_pos_row = curr_position[0] + transition[0]
                 new_pos_col = curr_position[1] + transition[1]              
                 if ((new_pos_row, new_pos_col) not in visited) and (new_pos_row >= 0 and new_pos_row <= rows_in_board - 1) and (new_pos_col >= 0 and new_pos_col <= cols_in_board - 1):
                     bfsQ.append((new_pos_row, new_pos_col))
-        print(visited)
         return chessboard
 
     
@@ -64,3 +62,6 @@ if __name__ == '__main__':
     
     knightsTour = KnightsTour()
     print(knightsTour.find_knights_tour(5,5))
+    print(knightsTour.find_knights_tour(8,8))
+    # for experiment_num in range(1, 101):
+        # assert knightsTour.find_knights_tour(5,5) == [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num)
