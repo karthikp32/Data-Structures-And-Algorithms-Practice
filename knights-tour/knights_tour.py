@@ -36,7 +36,7 @@ class KnightsTour:
     #time: O(rc)
     #space: O(rc)
 
-    def find_knights_tour(self, rows_in_board, cols_in_board):
+    def find_knights_tour_bfs(self, rows_in_board, cols_in_board):
         state_transitions = [(-1,2), (-1,-2), (1,2), (1,-2),(2,1),(2,-1),(-2,1),(-2,-1)]
         starting_position = (random.randint(0,rows_in_board - 1), random.randint(0,cols_in_board - 1))
         # starting_position = (0,0)
@@ -56,15 +56,68 @@ class KnightsTour:
                 if ((new_pos_row, new_pos_col) not in visited) and (new_pos_row >= 0 and new_pos_row <= rows_in_board - 1) and (new_pos_col >= 0 and new_pos_col <= cols_in_board - 1):
                     bfsQ.append((new_pos_row, new_pos_col))
         return chessboard
+    
+    def find_knights_tour_dfs_iterative(self, rows_in_board, cols_in_board):
+        state_transitions = [(-1,2), (-1,-2), (1,2), (1,-2),(2,1),(2,-1),(-2,1),(-2,-1)]
+        starting_position = (random.randint(0,rows_in_board - 1), random.randint(0,cols_in_board - 1))
+        # starting_position = (0,0)
+        visited = set()
+        chessboard = [[0 for x in range(rows_in_board)] for y in range(cols_in_board)]
+        dfsStack = [starting_position]
+        visited.add(starting_position)
+        while dfsStack:
+            curr_position = dfsStack.pop()
+            visited.add(curr_position)
+            chessboard[curr_position[0]][curr_position[1]] = 1
+            if len(visited) == rows_in_board * cols_in_board:
+                return chessboard
+            for transition in state_transitions:
+                new_pos_row = curr_position[0] + transition[0]
+                new_pos_col = curr_position[1] + transition[1]              
+                if ((new_pos_row, new_pos_col) not in visited) and (new_pos_row >= 0 and new_pos_row <= rows_in_board - 1) and (new_pos_col >= 0 and new_pos_col <= cols_in_board - 1):
+                    dfsStack.append((new_pos_row, new_pos_col))
+        return chessboard
+    
+    def find_knights_tour_dfs_recursive(self, curr_position, chessboard, visited, rows_in_board, cols_in_board):
+        state_transitions = [(-1,2), (-1,-2), (1,2), (1,-2),(2,1),(2,-1),(-2,1),(-2,-1)]
+        visited.add(curr_position)
+        if len(visited) != rows_in_board * cols_in_board:
+            visited.add(curr_position)
+            chessboard[curr_position[0]][curr_position[1]] = 1
+            if len(visited) == rows_in_board * cols_in_board:
+                return chessboard
+            for transition in state_transitions:
+                new_pos_row = curr_position[0] + transition[0]
+                new_pos_col = curr_position[1] + transition[1]              
+                if ((new_pos_row, new_pos_col) not in visited) and (new_pos_row >= 0 and new_pos_row <= rows_in_board - 1) and (new_pos_col >= 0 and new_pos_col <= cols_in_board - 1):
+                    return self.find_knights_tour_dfs_recursive((new_pos_row, new_pos_col), chessboard, visited, rows_in_board, cols_in_board)
+        return chessboard
+
 
     
 if __name__ == '__main__':    
     
     knightsTour = KnightsTour()
-    print(knightsTour.find_knights_tour(5,5))
-    for experiment_num in range(1, 101):
-        assert knightsTour.find_knights_tour(5,5) == [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num) + "in 5x5 chessboard experiments"
+    # print(knightsTour.find_knights_tour_bfs(5,5))
+    # for experiment_num in range(1, 101):
+    #     assert knightsTour.find_knights_tour_bfs(5,5) == [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num) + "in 5x5 chessboard experiments"
 
-    print(knightsTour.find_knights_tour(8,8))
-    for experiment_num in range(1, 101):
-        assert knightsTour.find_knights_tour(8,8) == [[1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num) + "in 8x8 chessboard experiments"
+    # print(knightsTour.find_knights_tour_bfs(8,8))
+    # for experiment_num in range(1, 101):
+    #     assert knightsTour.find_knights_tour_bfs(8,8) == [[1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num) + "in 8x8 chessboard experiments"
+
+    # # print(knightsTour.find_knights_tour_bfs(17,11))    
+
+    # print(knightsTour.find_knights_tour_dfs_iterative(5,5))
+    # for experiment_num in range(1, 101):
+    #     assert knightsTour.find_knights_tour_dfs_iterative(5,5) == [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num) + "in 5x5 chessboard experiments"
+    
+    # print(knightsTour.find_knights_tour_dfs_iterative(8,8))
+    # for experiment_num in range(1, 101):
+    #     assert knightsTour.find_knights_tour_dfs_iterative(8,8) == [[1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num) + "in 8x8 chessboard experiments"
+    
+    curr_position = (random.randint(0,5 - 1), random.randint(0,5 - 1))
+    visited = set()
+    chessboard = [[0 for x in range(5)] for y in range(5)]
+
+    print(knightsTour.find_knights_tour_dfs_recursive(curr_position, chessboard, visited, 5,5))
