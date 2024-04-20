@@ -62,6 +62,9 @@ if __name__ == '__main__':
     
     knightsTour = KnightsTour()
     print(knightsTour.find_knights_tour(5,5))
+    for experiment_num in range(1, 101):
+        assert knightsTour.find_knights_tour(5,5) == [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num) + "in 5x5 chessboard experiments"
+
     print(knightsTour.find_knights_tour(8,8))
-    # for experiment_num in range(1, 101):
-        # assert knightsTour.find_knights_tour(5,5) == [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num)
+    for experiment_num in range(1, 101):
+        assert knightsTour.find_knights_tour(8,8) == [[1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1]], "failed experiment" + str(experiment_num) + "in 8x8 chessboard experiments"
